@@ -8,7 +8,7 @@ namespace AdventOfCodeChallenges
     {
         public static void Main(string[] args)
         {
-            Day1_Second();
+            Day2_First();
 
             Console.ReadKey(true);
         }
@@ -47,12 +47,42 @@ namespace AdventOfCodeChallenges
 
         private static void Day2_First()
         {
-            var inputIds = File.ReadAllText(@"..\..\Data\day2.txt");
+            var inputIds = File.ReadAllLines(@"..\..\Data\day2.txt");
+
+            var twoCounter = 0;
+            var threeCounter = 0;
 
             foreach (var id in inputIds)
             {
+                var frequencies = new Dictionary<char, int>();
 
+                for (var index = 0; index < id.Length; index++)
+                {
+                    var letter = id[index];
+
+                    if (!frequencies.ContainsKey(letter))
+                    {
+                        frequencies[letter] = 1;
+                    }
+                    else
+                    {
+                        frequencies[letter]++;
+                    }
+                }
+
+                if (frequencies.ContainsValue(2))
+                {
+                    twoCounter++;
+                }
+
+                if (frequencies.ContainsValue(3))
+                {
+                    threeCounter++;
+                }
             }
+
+            var result = twoCounter * threeCounter;
+            Console.WriteLine($"Result = {result}");
         }
     }
 }
