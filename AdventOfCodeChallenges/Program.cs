@@ -8,7 +8,7 @@ namespace AdventOfCodeChallenges
     {
         public static void Main(string[] args)
         {
-            Day2_First();
+            Day2_Second();
 
             Console.ReadKey(true);
         }
@@ -83,6 +83,38 @@ namespace AdventOfCodeChallenges
 
             var result = twoCounter * threeCounter;
             Console.WriteLine($"Result = {result}");
+        }
+
+        private static void Day2_Second()
+        {
+            var inputIds = File.ReadAllLines(@"..\..\Data\day2.txt");
+
+            var previousData = new HashSet<string>();
+
+            foreach (var id in inputIds)
+            {
+                var found = false;
+
+                foreach (var previousId in previousData)
+                {
+                    var index = Helpers.GetDifferentiatingIndex(id, previousId);
+
+                    if (index != -1)
+                    {
+                        var result = id.Remove(index, 1);
+                        Console.WriteLine($"Result = {result}");
+                        found = true;
+                        break;
+                    }
+                }
+
+                if (found)
+                {
+                    break;
+                }
+
+                previousData.Add(id);
+            }
         }
     }
 }
