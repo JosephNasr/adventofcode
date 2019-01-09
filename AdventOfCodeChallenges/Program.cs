@@ -1,6 +1,8 @@
-﻿using System;
+﻿using AdventOfCodeChallenges.Models;
+using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace AdventOfCodeChallenges
 {
@@ -8,7 +10,7 @@ namespace AdventOfCodeChallenges
     {
         public static void Main(string[] args)
         {
-            Day2_Second();
+            Day3_First();
 
             Console.ReadKey(true);
         }
@@ -115,6 +117,28 @@ namespace AdventOfCodeChallenges
 
                 previousData.Add(id);
             }
+        }
+
+        private static void Day3_First()
+        {
+            var inputClaims = File.ReadAllLines(@"..\..\Data\day3.txt");
+
+            var grid = new Dictionary<int, Dictionary<int, bool>>();
+
+            foreach (var claim in inputClaims)
+            {
+                var elfClaim = new ElfClaim(claim);
+                grid.AddClaimValues(elfClaim.Left, elfClaim.Top, elfClaim.Width, elfClaim.Height);
+            }
+
+            var overlappingCounter = 0;
+
+            foreach (var leftPositions in grid.Keys)
+            {
+                overlappingCounter += grid[leftPositions].Values.Where(value => value).Count();
+            }
+
+            Console.WriteLine($"Result = {overlappingCounter}");
         }
     }
 }
