@@ -1,4 +1,5 @@
 ﻿using AdventOfCodeChallenges.Models;
+using AdventOfCodeChallenges.Static;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -8,6 +9,8 @@ namespace AdventOfCodeChallenges
 {
     public class Program
     {
+        private const string DATA_FOLDER = @"..\..\Data";
+
         public static void Main(string[] args)
         {
             Day3_First();
@@ -17,7 +20,7 @@ namespace AdventOfCodeChallenges
 
         private static void Day1_Second()
         {
-            var inputFrequencies = File.ReadAllLines(@"..\..\Data\day1.txt");
+            var inputFrequencies = File.ReadAllLines(Path.Combine(DATA_FOLDER, "day1.txt"));
 
             var frequency = 0;
             var found = false;
@@ -31,7 +34,7 @@ namespace AdventOfCodeChallenges
 
                 foreach (var newFrequency in inputFrequencies)
                 {
-                    frequency += Int32.Parse(newFrequency);
+                    frequency += int.Parse(newFrequency);
 
                     if (previousData.Contains(frequency))
                     {
@@ -49,7 +52,7 @@ namespace AdventOfCodeChallenges
 
         private static void Day2_First()
         {
-            var inputIds = File.ReadAllLines(@"..\..\Data\day2.txt");
+            var inputIds = File.ReadAllLines(Path.Combine(DATA_FOLDER, "day2.txt"));
 
             var twoCounter = 0;
             var threeCounter = 0;
@@ -89,13 +92,13 @@ namespace AdventOfCodeChallenges
 
         private static void Day2_Second()
         {
-            var inputIds = File.ReadAllLines(@"..\..\Data\day2.txt");
+            var inputIds = File.ReadAllLines(Path.Combine(DATA_FOLDER, "day2.txt"));
 
             var previousData = new HashSet<string>();
 
             foreach (var id in inputIds)
             {
-                var found = false;
+                var result = "";
 
                 foreach (var previousId in previousData)
                 {
@@ -103,15 +106,14 @@ namespace AdventOfCodeChallenges
 
                     if (index != -1)
                     {
-                        var result = id.Remove(index, 1);
-                        Console.WriteLine($"Result = {result}");
-                        found = true;
+                        result = id.Remove(index, 1);
                         break;
                     }
                 }
 
-                if (found)
+                if (!string.IsNullOrEmpty(result))
                 {
+                    Console.WriteLine($"Result = {result}");
                     break;
                 }
 
@@ -121,7 +123,7 @@ namespace AdventOfCodeChallenges
 
         private static void Day3_First()
         {
-            var inputClaims = File.ReadAllLines(@"..\..\Data\day3.txt");
+            var inputClaims = File.ReadAllLines(Path.Combine(DATA_FOLDER, "day3.txt"));
 
             var grid = new Dictionary<int, Dictionary<int, bool>>();
 
@@ -131,14 +133,8 @@ namespace AdventOfCodeChallenges
                 grid.AddClaimValues(elfClaim.Left, elfClaim.Top, elfClaim.Width, elfClaim.Height);
             }
 
-            var overlappingCounter = 0;
-
-            foreach (var leftPositions in grid.Keys)
-            {
-                overlappingCounter += grid[leftPositions].Values.Where(value => value).Count();
-            }
-
-            Console.WriteLine($"Result = {overlappingCounter}");
+            var overlappingSquares = grid.Sum(kvp => kvp.Value.Values.Where(value => value).Count());
+            Console.WriteLine($"Result = {overlappingSquares}");
         }
     }
 }

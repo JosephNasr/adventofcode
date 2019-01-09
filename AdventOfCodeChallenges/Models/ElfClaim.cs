@@ -2,11 +2,11 @@
 {
     public class ElfClaim
     {
-        public int Id { get; set; }
-        public int Left { get; set; }
-        public int Top { get; set; }
-        public int Width { get; set; }
-        public int Height { get; set; }
+        public int Id { get; }
+        public int Left { get; }
+        public int Top { get; }
+        public int Width { get; }
+        public int Height { get; }
 
         public ElfClaim(string claim)
         {

@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace AdventOfCodeChallenges
+﻿namespace AdventOfCodeChallenges.Static
 {
     public static class Helpers
     {
