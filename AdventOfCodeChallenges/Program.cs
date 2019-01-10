@@ -13,7 +13,7 @@ namespace AdventOfCodeChallenges
 
         public static void Main(string[] args)
         {
-            Day3_First();
+            Day3_Second();
 
             Console.ReadKey(true);
         }
@@ -129,7 +129,7 @@ namespace AdventOfCodeChallenges
 
             foreach (var claim in inputClaims)
             {
-                var elfClaim = new ElfClaim(claim);
+                var elfClaim = new Claim(claim);
                 grid.AddClaimValues(elfClaim.Left, elfClaim.Top, elfClaim.Width, elfClaim.Height);
             }
 
@@ -137,20 +137,32 @@ namespace AdventOfCodeChallenges
             Console.WriteLine($"Result = {overlappingSquares}");
         }
 
-        //private static void Day3_Second()
-        //{
-        //    var inputClaims = File.ReadAllLines(Path.Combine(DATA_FOLDER, "day3.txt"));
+        private static void Day3_Second()
+        {
+            var inputClaims = File.ReadAllLines(Path.Combine(DATA_FOLDER, "day3.txt"));
 
-        //    var grid = new Dictionary<int, Dictionary<int, int>>();
+            var resultId = 0;
+            var grid = new Dictionary<int, Dictionary<int, int>>();
 
-        //    foreach (var claim in inputClaims)
-        //    {
-        //        var elfClaim = new ElfClaim(claim);
-        //        grid.AddClaimValues(elfClaim.Left, elfClaim.Top, elfClaim.Width, elfClaim.Height);
-        //    }
+            foreach (var claim in inputClaims)
+            {
+                var elfClaim = new Claim(claim);
+                grid.AddClaimValues(elfClaim.Left, elfClaim.Top, elfClaim.Width, elfClaim.Height);
+            }
 
-        //    var overlappingSquares = grid.Sum(kvp => kvp.Value.Values.Where(value => value > 1).Count());
-        //    Console.WriteLine($"Result = {overlappingSquares}");
-        //}
+            foreach (var inputClaim in inputClaims)
+            {
+                var claim = new Claim(inputClaim);
+                var overlapping = grid.CheckIfOverlapped(claim.Left, claim.Top, claim.Width, claim.Height);
+
+                if (!overlapping)
+                {
+                    resultId = claim.Id;
+                    break;
+                }
+            }
+
+            Console.WriteLine($"Result = {resultId}");
+        }
     }
 }

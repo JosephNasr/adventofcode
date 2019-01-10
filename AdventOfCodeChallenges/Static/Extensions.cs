@@ -30,5 +30,21 @@ namespace AdventOfCodeChallenges.Static
                 grid[leftPosition][topPosition]++;
             }
         }
+
+        public static bool CheckIfOverlapped(this Dictionary<int, Dictionary<int, int>> grid, int leftPosition, int topPosition, int width, int height)
+        {
+            for (var leftIndex = leftPosition; leftIndex < leftPosition + width; leftIndex++)
+            {
+                for (var topIndex = topPosition; topIndex < topPosition + height; topIndex++)
+                {
+                    if (grid[leftIndex][topIndex] > 1)
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
     }
 }

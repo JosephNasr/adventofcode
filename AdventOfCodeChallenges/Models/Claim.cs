@@ -1,6 +1,6 @@
 ﻿namespace AdventOfCodeChallenges.Models
 {
-    public class ElfClaim
+    public class Claim
     {
         public int Id { get; }
         public int Left { get; }
@@ -8,7 +8,7 @@
         public int Width { get; }
         public int Height { get; }
 
-        public ElfClaim(string claim)
+        public Claim(string claim)
         {
             var elements = claim.Split(' ');
 

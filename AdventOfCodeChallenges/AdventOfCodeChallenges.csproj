@@ -45,7 +45,7 @@
   <ItemGroup>
     <Compile Include="Static\Extensions.cs" />
     <Compile Include="Static\Helpers.cs" />
-    <Compile Include="Models\ElfClaim.cs" />
+    <Compile Include="Models\Claim.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
