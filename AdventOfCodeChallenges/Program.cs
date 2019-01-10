@@ -125,7 +125,7 @@ namespace AdventOfCodeChallenges
         {
             var inputClaims = File.ReadAllLines(Path.Combine(DATA_FOLDER, "day3.txt"));
 
-            var grid = new Dictionary<int, Dictionary<int, bool>>();
+            var grid = new Dictionary<int, Dictionary<int, int>>();
 
             foreach (var claim in inputClaims)
             {
@@ -133,8 +133,24 @@ namespace AdventOfCodeChallenges
                 grid.AddClaimValues(elfClaim.Left, elfClaim.Top, elfClaim.Width, elfClaim.Height);
             }
 
-            var overlappingSquares = grid.Sum(kvp => kvp.Value.Values.Where(value => value).Count());
+            var overlappingSquares = grid.Sum(kvp => kvp.Value.Values.Where(value => value > 1).Count());
             Console.WriteLine($"Result = {overlappingSquares}");
         }
+
+        //private static void Day3_Second()
+        //{
+        //    var inputClaims = File.ReadAllLines(Path.Combine(DATA_FOLDER, "day3.txt"));
+
+        //    var grid = new Dictionary<int, Dictionary<int, int>>();
+
+        //    foreach (var claim in inputClaims)
+        //    {
+        //        var elfClaim = new ElfClaim(claim);
+        //        grid.AddClaimValues(elfClaim.Left, elfClaim.Top, elfClaim.Width, elfClaim.Height);
+        //    }
+
+        //    var overlappingSquares = grid.Sum(kvp => kvp.Value.Values.Where(value => value > 1).Count());
+        //    Console.WriteLine($"Result = {overlappingSquares}");
+        //}
     }
 }
