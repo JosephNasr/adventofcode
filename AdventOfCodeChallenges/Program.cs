@@ -13,7 +13,7 @@ namespace AdventOfCodeChallenges
 
         public static void Main(string[] args)
         {
-            Day3_Second();
+            Day4_First();
 
             Console.ReadKey(true);
         }
@@ -163,6 +163,42 @@ namespace AdventOfCodeChallenges
             }
 
             Console.WriteLine($"Result = {resultId}");
+        }
+
+        private static void Day4_First()
+        {
+            var inputTimestamps = File.ReadAllLines(Path.Combine(DATA_FOLDER, "day4.txt"));
+
+            var timestamps = new List<Timestamp>();
+            var sleepSchedule = new Dictionary<int, Dictionary<int, int>>();
+
+            inputTimestamps.ToList().ForEach(timestamp => timestamps.Add(new Timestamp(timestamp)));
+            timestamps = timestamps.OrderBy(timestamp => timestamp.Time).ToList();
+
+            var id = -1;
+            var sleepStart = DateTime.MinValue;
+
+            foreach (var timestamp in timestamps)
+            {
+                switch (timestamp.Action.ToLower())
+                {
+                    case "begins shift":
+                        id = timestamp.Id;
+                        break;
+                    case "falls asleep":
+                        sleepStart = timestamp.Time;
+                        break;
+                    case "wakes up":
+                        sleepSchedule.AddSleepTime(id, sleepStart, timestamp.Time);
+                        break;
+                }
+            }
+
+            var laziestPersonId = sleepSchedule.GetLaziestPerson();
+            var mostSleptMinute = sleepSchedule.GetMostSleepMinute(laziestPersonId);
+
+            var result = laziestPersonId * mostSleptMinute;
+            Console.WriteLine($"Result = {result}");
         }
     }
 }
