@@ -22,5 +22,18 @@
 
             return index;
         }
+
+        public static bool AreSameLetterButDifferentCase(char first, char second)
+        {
+            if (first == second)
+            {
+                return false;
+            }
+
+            var firstStr = first.ToString();
+            var secondStr = second.ToString();
+
+            return firstStr == secondStr.ToUpper() || firstStr.ToUpper() == secondStr;
+        }
     }
 }

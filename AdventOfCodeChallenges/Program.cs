@@ -13,7 +13,7 @@ namespace AdventOfCodeChallenges
 
         public static void Main(string[] args)
         {
-            Day4_Second();
+            Day5_First();
 
             Console.ReadKey(true);
         }
@@ -232,12 +232,29 @@ namespace AdventOfCodeChallenges
                         break;
                 }
             }
-            
+
             var longestSleepingMinuteDuration = sleepSchedule.Max(personItem => personItem.Value.Max(minuteItem => minuteItem.Value));
             var mostPersonFrequentMinuteAsleep = sleepSchedule.FirstOrDefault(personItem => personItem.Value.Max(minuteItem => minuteItem.Value) == longestSleepingMinuteDuration).Key;
             var mostFrequentSleptMinute = sleepSchedule[mostPersonFrequentMinuteAsleep].FirstOrDefault(minuteItem => minuteItem.Value == longestSleepingMinuteDuration).Key;
 
             var result = mostPersonFrequentMinuteAsleep * mostFrequentSleptMinute;
+            Console.WriteLine($"Result = {result}");
+        }
+
+        private static void Day5_First()
+        {
+            var inputData = File.ReadAllText(Path.Combine(DATA_FOLDER, "day5.txt"));
+
+            for (var index = 0; index < inputData.Length - 1; index++)
+            {
+                if (Helpers.AreSameLetterButDifferentCase(inputData[index], inputData[index + 1]))
+                {
+                    inputData = inputData.Remove(index, 2);
+                    index -= index > 0 ? 2 : 1;
+                }
+            }
+
+            var result = inputData.Length;
             Console.WriteLine($"Result = {result}");
         }
     }
