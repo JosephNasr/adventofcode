@@ -13,7 +13,7 @@ namespace AdventOfCodeChallenges
 
         public static void Main(string[] args)
         {
-            Day4_First();
+            Day4_Second();
 
             Console.ReadKey(true);
         }
@@ -194,10 +194,50 @@ namespace AdventOfCodeChallenges
                 }
             }
 
-            var laziestPersonId = sleepSchedule.GetLaziestPerson();
-            var mostSleptMinute = sleepSchedule.GetMostSleepMinute(laziestPersonId);
+            var longestSleepingDuration = sleepSchedule.Max(personItem => personItem.Value.Sum(minuteItem => minuteItem.Value));
+            var mostPersonSleptId = sleepSchedule.FirstOrDefault(personItem => personItem.Value.Sum(minuteItem => minuteItem.Value) == longestSleepingDuration).Key;
 
-            var result = laziestPersonId * mostSleptMinute;
+            var longestSleepingMinuteDuration = sleepSchedule[mostPersonSleptId].Values.Max(minute => minute);
+            var mostSleptMinute = sleepSchedule[mostPersonSleptId].FirstOrDefault(minuteItem => minuteItem.Value == longestSleepingMinuteDuration).Key;
+
+            var result = mostPersonSleptId * mostSleptMinute;
+            Console.WriteLine($"Result = {result}");
+        }
+
+        private static void Day4_Second()
+        {
+            var inputTimestamps = File.ReadAllLines(Path.Combine(DATA_FOLDER, "day4.txt"));
+
+            var timestamps = new List<Timestamp>();
+            var sleepSchedule = new Dictionary<int, Dictionary<int, int>>();
+
+            inputTimestamps.ToList().ForEach(timestamp => timestamps.Add(new Timestamp(timestamp)));
+            timestamps = timestamps.OrderBy(timestamp => timestamp.Time).ToList();
+
+            var id = -1;
+            var sleepStart = DateTime.MinValue;
+
+            foreach (var timestamp in timestamps)
+            {
+                switch (timestamp.Action.ToLower())
+                {
+                    case "begins shift":
+                        id = timestamp.Id;
+                        break;
+                    case "falls asleep":
+                        sleepStart = timestamp.Time;
+                        break;
+                    case "wakes up":
+                        sleepSchedule.AddSleepTime(id, sleepStart, timestamp.Time);
+                        break;
+                }
+            }
+            
+            var longestSleepingMinuteDuration = sleepSchedule.Max(personItem => personItem.Value.Max(minuteItem => minuteItem.Value));
+            var mostPersonFrequentMinuteAsleep = sleepSchedule.FirstOrDefault(personItem => personItem.Value.Max(minuteItem => minuteItem.Value) == longestSleepingMinuteDuration).Key;
+            var mostFrequentSleptMinute = sleepSchedule[mostPersonFrequentMinuteAsleep].FirstOrDefault(minuteItem => minuteItem.Value == longestSleepingMinuteDuration).Key;
+
+            var result = mostPersonFrequentMinuteAsleep * mostFrequentSleptMinute;
             Console.WriteLine($"Result = {result}");
         }
     }
