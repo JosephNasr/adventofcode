@@ -13,7 +13,7 @@ namespace AdventOfCodeChallenges
 
         public static void Main(string[] args)
         {
-            Day5_First();
+            Day5_Second();
 
             Console.ReadKey(true);
         }
@@ -256,6 +256,39 @@ namespace AdventOfCodeChallenges
 
             var result = inputData.Length;
             Console.WriteLine($"Result = {result}");
+        }
+
+        private static void Day5_Second()
+        {
+            var inputData = File.ReadAllText(Path.Combine(DATA_FOLDER, "day5.txt"));
+
+            var shortestPolymerLength = int.MaxValue;
+
+            for (var character = 'a'; character <= 'z'; character++)
+            {
+                var letter = character.ToString();
+
+                if (inputData.Contains(letter) || inputData.Contains(letter.ToUpper()))
+                {
+                    var polymerResult = inputData.Replace(letter, "").Replace(letter.ToUpper(), "");
+
+                    for (var index = 0; index < polymerResult.Length - 1; index++)
+                    {
+                        if (Helpers.AreSameLetterButDifferentCase(polymerResult[index], polymerResult[index + 1]))
+                        {
+                            polymerResult = polymerResult.Remove(index, 2);
+                            index -= index > 0 ? 2 : 1;
+                        }
+                    }
+
+                    if (polymerResult.Length < shortestPolymerLength)
+                    {
+                        shortestPolymerLength = polymerResult.Length;
+                    }
+                }
+            }
+
+            Console.WriteLine($"Result = {shortestPolymerLength}");
         }
     }
 }
