@@ -13,9 +13,18 @@ namespace AdventOfCodeChallenges
 
         public static void Main(string[] args)
         {
-            Day5_Second();
+            Day1_First();
 
             Console.ReadKey(true);
+        }
+
+        private static void Day1_First()
+        {
+            var inputFrequencies = File.ReadAllLines(Path.Combine(DATA_FOLDER, "day1.txt"));
+
+            var totalFrequency = inputFrequencies.Sum(frequency => int.Parse(frequency));
+            
+            Console.WriteLine($"Result = {totalFrequency}");
         }
 
         private static void Day1_Second()
