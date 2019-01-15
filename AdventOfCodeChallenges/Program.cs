@@ -13,17 +13,28 @@ namespace AdventOfCodeChallenges
 
         public static void Main(string[] args)
         {
-            Day1_First();
+            //Day1_First();
+            //Day1_Second();
+            //Day2_First();
+            //Day2_Second();
+            //Day3_First();
+            //Day3_Second();
+            //Day4_First();
+            //Day4_Second();
+            Day5_First();
+            Day5_Second();
 
             Console.ReadKey(true);
         }
+
+        #region Day 1
 
         private static void Day1_First()
         {
             var inputFrequencies = File.ReadAllLines(Path.Combine(DATA_FOLDER, "day1.txt"));
 
             var totalFrequency = inputFrequencies.Sum(frequency => int.Parse(frequency));
-            
+
             Console.WriteLine($"Result = {totalFrequency}");
         }
 
@@ -58,6 +69,10 @@ namespace AdventOfCodeChallenges
                 }
             }
         }
+
+        #endregion
+
+        #region Day 2
 
         private static void Day2_First()
         {
@@ -130,6 +145,10 @@ namespace AdventOfCodeChallenges
             }
         }
 
+        #endregion
+
+        #region Day 3
+
         private static void Day3_First()
         {
             var inputClaims = File.ReadAllLines(Path.Combine(DATA_FOLDER, "day3.txt"));
@@ -173,6 +192,10 @@ namespace AdventOfCodeChallenges
 
             Console.WriteLine($"Result = {resultId}");
         }
+
+        #endregion
+
+        #region Day 4
 
         private static void Day4_First()
         {
@@ -250,9 +273,14 @@ namespace AdventOfCodeChallenges
             Console.WriteLine($"Result = {result}");
         }
 
+        #endregion
+
+        #region Day 5
+
         private static void Day5_First()
         {
             var inputData = File.ReadAllText(Path.Combine(DATA_FOLDER, "day5.txt"));
+            var polymer = new Stack<char>();
 
             for (var index = 0; index < inputData.Length - 1; index++)
             {
@@ -270,34 +298,34 @@ namespace AdventOfCodeChallenges
         private static void Day5_Second()
         {
             var inputData = File.ReadAllText(Path.Combine(DATA_FOLDER, "day5.txt"));
-
             var shortestPolymerLength = int.MaxValue;
 
             for (var character = 'a'; character <= 'z'; character++)
             {
-                var letter = character.ToString();
+                var modifiedInput = inputData.Replace(character.ToString(), "").Replace(character.ToString().ToUpper(), "");
+                var polymer = new Stack<char>();
 
-                if (inputData.Contains(letter) || inputData.Contains(letter.ToUpper()))
+                for (var index = 0; index < modifiedInput.Length; index++)
                 {
-                    var polymerResult = inputData.Replace(letter, "").Replace(letter.ToUpper(), "");
-
-                    for (var index = 0; index < polymerResult.Length - 1; index++)
+                    if (polymer.Count > 0 && Helpers.AreSameLetterButDifferentCase(modifiedInput[index], polymer.Peek()))
                     {
-                        if (Helpers.AreSameLetterButDifferentCase(polymerResult[index], polymerResult[index + 1]))
-                        {
-                            polymerResult = polymerResult.Remove(index, 2);
-                            index -= index > 0 ? 2 : 1;
-                        }
+                        polymer.Pop();
                     }
-
-                    if (polymerResult.Length < shortestPolymerLength)
+                    else
                     {
-                        shortestPolymerLength = polymerResult.Length;
+                        polymer.Push(modifiedInput[index]);
                     }
+                }
+
+                if (polymer.Count < shortestPolymerLength)
+                {
+                    shortestPolymerLength = polymer.Count;
                 }
             }
 
             Console.WriteLine($"Result = {shortestPolymerLength}");
         }
+
+        #endregion
     }
 }
