@@ -280,7 +280,6 @@ namespace AdventOfCodeChallenges
         private static void Day5_First()
         {
             var inputData = File.ReadAllText(Path.Combine(DATA_FOLDER, "day5.txt"));
-            var polymer = new Stack<char>();
 
             for (var index = 0; index < inputData.Length - 1; index++)
             {
