@@ -4,9 +4,9 @@ namespace AdventOfCodeChallenges.Models
 {
     public class Timestamp
     {
-        public int Id { get; set; }
-        public DateTime Time { get; set; }
-        public string Action { get; set; }
+        public int Id { get; }
+        public DateTime Time { get; }
+        public string Action { get; }
 
         public Timestamp(string timestamp)
         {
