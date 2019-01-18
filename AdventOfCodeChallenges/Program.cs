@@ -13,18 +13,19 @@ namespace AdventOfCodeChallenges
 
         public static void Main(string[] args)
         {
-            //Day1_First();
-            //Day1_Second();
-            //Day2_First();
-            //Day2_Second();
-            //Day3_First();
-            //Day3_Second();
-            //Day4_First();
-            //Day4_Second();
+            Day1_First();
+            Day1_Second();
+            Day2_First();
+            Day2_Second();
+            Day3_First();
+            Day3_Second();
+            Day4_First();
+            Day4_Second();
             Day5_First();
             Day5_Second();
+            Day6_First();
 
-            Console.ReadKey(true);
+            Console.ReadLine();
         }
 
         #region Day 1
@@ -35,7 +36,7 @@ namespace AdventOfCodeChallenges
 
             var totalFrequency = inputFrequencies.Sum(frequency => int.Parse(frequency));
 
-            Console.WriteLine($"Result = {totalFrequency}");
+            Console.WriteLine($"Day 1, first:\t{totalFrequency}");
         }
 
         private static void Day1_Second()
@@ -50,7 +51,7 @@ namespace AdventOfCodeChallenges
 
             while (!found)
             {
-                Console.WriteLine($"Iteration #{iterations++}");
+                //Console.WriteLine($"Iteration #{iterations++}");
 
                 foreach (var newFrequency in inputFrequencies)
                 {
@@ -58,7 +59,7 @@ namespace AdventOfCodeChallenges
 
                     if (previousData.Contains(frequency))
                     {
-                        Console.WriteLine($"First duplicate: {frequency}");
+                        Console.WriteLine($"Day 1, second:\t{frequency}");
                         found = true;
                         break;
                     }
@@ -111,7 +112,7 @@ namespace AdventOfCodeChallenges
             }
 
             var result = twoCounter * threeCounter;
-            Console.WriteLine($"Result = {result}");
+            Console.WriteLine($"Day 2, first:\t{result}");
         }
 
         private static void Day2_Second()
@@ -137,7 +138,7 @@ namespace AdventOfCodeChallenges
 
                 if (!string.IsNullOrEmpty(result))
                 {
-                    Console.WriteLine($"Result = {result}");
+                    Console.WriteLine($"Day 2, second:\t{result}");
                     break;
                 }
 
@@ -162,7 +163,7 @@ namespace AdventOfCodeChallenges
             }
 
             var overlappingSquares = grid.Sum(kvp => kvp.Value.Values.Where(value => value > 1).Count());
-            Console.WriteLine($"Result = {overlappingSquares}");
+            Console.WriteLine($"Day 3, first:\t{overlappingSquares}");
         }
 
         private static void Day3_Second()
@@ -190,7 +191,7 @@ namespace AdventOfCodeChallenges
                 }
             }
 
-            Console.WriteLine($"Result = {resultId}");
+            Console.WriteLine($"Day 3, second:\t{resultId}");
         }
 
         #endregion
@@ -233,7 +234,7 @@ namespace AdventOfCodeChallenges
             var mostSleptMinute = sleepSchedule[mostPersonSleptId].FirstOrDefault(minuteItem => minuteItem.Value == longestSleepingMinuteDuration).Key;
 
             var result = mostPersonSleptId * mostSleptMinute;
-            Console.WriteLine($"Result = {result}");
+            Console.WriteLine($"Day 4, first:\t{result}");
         }
 
         private static void Day4_Second()
@@ -270,7 +271,7 @@ namespace AdventOfCodeChallenges
             var mostFrequentSleptMinute = sleepSchedule[mostPersonFrequentMinuteAsleep].FirstOrDefault(minuteItem => minuteItem.Value == longestSleepingMinuteDuration).Key;
 
             var result = mostPersonFrequentMinuteAsleep * mostFrequentSleptMinute;
-            Console.WriteLine($"Result = {result}");
+            Console.WriteLine($"Day 4, second:\t{result}");
         }
 
         #endregion
@@ -291,7 +292,7 @@ namespace AdventOfCodeChallenges
             }
 
             var result = inputData.Length;
-            Console.WriteLine($"Result = {result}");
+            Console.WriteLine($"Day 5, first:\t{result}");
         }
 
         private static void Day5_Second()
@@ -322,9 +323,25 @@ namespace AdventOfCodeChallenges
                 }
             }
 
-            Console.WriteLine($"Result = {shortestPolymerLength}");
+            Console.WriteLine($"Day 5, second:\t{shortestPolymerLength}");
+        }
+
+        #endregion
+
+        #region Day 6
+
+        private static void Day6_First()
+        {
+            var inputCoordinates = File.ReadAllLines(Path.Combine(DATA_FOLDER, "day6.txt"));
+            var data = inputCoordinates.Select(inputCoordinate => new Coordinate(inputCoordinate)).ToList();
+
+            foreach (var inputCoordinate in inputCoordinates)
+            {
+                var coordinate = new Coordinate(inputCoordinate);
+            }
         }
 
         #endregion
     }
 }
+
