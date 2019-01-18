@@ -338,4 +338,3 @@ namespace AdventOfCodeChallenges
         #endregion
     }
 }
-
