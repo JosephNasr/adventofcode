@@ -13,17 +13,17 @@ namespace AdventOfCodeChallenges
 
         public static void Main(string[] args)
         {
-            Day1_First();
-            Day1_Second();
-            Day2_First();
-            Day2_Second();
-            Day3_First();
-            Day3_Second();
+            //Day1_First();
+            //Day1_Second();
+            //Day2_First();
+            //Day2_Second();
+            //Day3_First();
+            //Day3_Second();
             Day4_First();
             Day4_Second();
-            Day5_First();
-            Day5_Second();
-            Day6_First();
+            //Day5_First();
+            //Day5_Second();
+            //Day6_First();
 
             Console.ReadLine();
         }
@@ -45,7 +45,7 @@ namespace AdventOfCodeChallenges
 
             var frequency = 0;
             var found = false;
-            var iterations = 0;
+            //var iterations = 0;
 
             var previousData = new HashSet<int>();
 
@@ -203,7 +203,7 @@ namespace AdventOfCodeChallenges
             var inputTimestamps = File.ReadAllLines(Path.Combine(DATA_FOLDER, "day4.txt"));
 
             var timestamps = new List<Timestamp>();
-            var sleepSchedule = new Dictionary<int, Dictionary<int, int>>();
+            var sleepSchedule = new Dictionary<(int id, int minute), int>();
 
             inputTimestamps.ToList().ForEach(timestamp => timestamps.Add(new Timestamp(timestamp)));
             timestamps = timestamps.OrderBy(timestamp => timestamp.Time).ToList();
@@ -227,13 +227,9 @@ namespace AdventOfCodeChallenges
                 }
             }
 
-            var longestSleepingDuration = sleepSchedule.Max(personItem => personItem.Value.Sum(minuteItem => minuteItem.Value));
-            var mostPersonSleptId = sleepSchedule.FirstOrDefault(personItem => personItem.Value.Sum(minuteItem => minuteItem.Value) == longestSleepingDuration).Key;
+            var mostSleepingPerson = sleepSchedule.GroupBy(item => item.Key.id).ToList().Select(item => item.ToList()).OrderBy(item => item.Sum(kvp => kvp.Value)).Last().OrderBy(item => item.Value).Last().Key;
 
-            var longestSleepingMinuteDuration = sleepSchedule[mostPersonSleptId].Values.Max(minute => minute);
-            var mostSleptMinute = sleepSchedule[mostPersonSleptId].FirstOrDefault(minuteItem => minuteItem.Value == longestSleepingMinuteDuration).Key;
-
-            var result = mostPersonSleptId * mostSleptMinute;
+            var result = mostSleepingPerson.id * mostSleepingPerson.minute;
             Console.WriteLine($"Day 4, first:\t{result}");
         }
 
@@ -242,7 +238,7 @@ namespace AdventOfCodeChallenges
             var inputTimestamps = File.ReadAllLines(Path.Combine(DATA_FOLDER, "day4.txt"));
 
             var timestamps = new List<Timestamp>();
-            var sleepSchedule = new Dictionary<int, Dictionary<int, int>>();
+            var sleepSchedule = new Dictionary<(int id, int minute), int>();
 
             inputTimestamps.ToList().ForEach(timestamp => timestamps.Add(new Timestamp(timestamp)));
             timestamps = timestamps.OrderBy(timestamp => timestamp.Time).ToList();
@@ -266,11 +262,9 @@ namespace AdventOfCodeChallenges
                 }
             }
 
-            var longestSleepingMinuteDuration = sleepSchedule.Max(personItem => personItem.Value.Max(minuteItem => minuteItem.Value));
-            var mostPersonFrequentMinuteAsleep = sleepSchedule.FirstOrDefault(personItem => personItem.Value.Max(minuteItem => minuteItem.Value) == longestSleepingMinuteDuration).Key;
-            var mostFrequentSleptMinute = sleepSchedule[mostPersonFrequentMinuteAsleep].FirstOrDefault(minuteItem => minuteItem.Value == longestSleepingMinuteDuration).Key;
-
-            var result = mostPersonFrequentMinuteAsleep * mostFrequentSleptMinute;
+            var mostFrequentMinuteSlept = sleepSchedule.OrderBy(item => item.Value).Last().Key;
+            
+            var result = mostFrequentMinuteSlept.id * mostFrequentMinuteSlept.minute;
             Console.WriteLine($"Day 4, second:\t{result}");
         }
 

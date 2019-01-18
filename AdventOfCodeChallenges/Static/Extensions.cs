@@ -48,23 +48,19 @@ namespace AdventOfCodeChallenges.Static
             return false;
         }
 
-        public static void AddSleepTime(this Dictionary<int, Dictionary<int, int>> sleepSchedule, int id, DateTime start, DateTime end)
+        public static void AddSleepTime(this Dictionary<(int, int), int> sleepSchedule, int id, DateTime start, DateTime end)
         {
             while (start < end)
             {
-                if (!sleepSchedule.ContainsKey(id))
+                if (!sleepSchedule.ContainsKey((id, start.Minute)))
                 {
-                    sleepSchedule[id] = new Dictionary<int, int> { { start.Minute, 1 } };
-                }
-                else if (!sleepSchedule[id].ContainsKey(start.Minute))
-                {
-                    sleepSchedule[id][start.Minute] = 1;
+                    sleepSchedule[(id, start.Minute)] = 1;
                 }
                 else
                 {
-                    sleepSchedule[id][start.Minute]++;
+                    sleepSchedule[(id, start.Minute)]++;
                 }
-
+                
                 start = start.AddMinutes(1);
             }
         }
